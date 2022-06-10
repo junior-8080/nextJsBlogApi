@@ -1,9 +1,6 @@
 const Post = require('../Posts/services')
 
-
-
 function formPost(req,res){ 
-  
    const post  = new Post({
     title:req.body.title,
     description : req.body.description,
@@ -51,7 +48,7 @@ function getPost(req,res){
 
   Post.findById(req.params.postId)
   .then(result => {
-    console.log(result)
+    // console.log(result)
     return res.json({
       statusCode:200,
       message:'SUCCESS',
@@ -106,6 +103,6 @@ module.exports = {
   getPost,
   formPost,
   editPost,
-   deleteAll
+  deleteAll
 }
 
