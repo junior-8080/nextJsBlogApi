@@ -10,13 +10,14 @@ const post = require('./router');
 
 
 
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 
 app.use("/v1/api",post);
-mongoose.connect('mongodb://localhost:27017/MyFirstDb',{useNewUrlParser: true,useUnifiedTopology:true})
+mongoose.connect(process.env.MONGO_DB_CONNECTING_STRING,{useNewUrlParser: true,useUnifiedTopology:true})
 .then((connect) => {
      console.log('mongo is connected')
 })
