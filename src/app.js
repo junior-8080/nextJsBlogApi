@@ -26,10 +26,10 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use("/signup",signup);
-app.use("/login",sigin);
-app.use("/posts",posts);
-app.use("/users",users)
+app.use("/v1/signup",signup);
+app.use("/v1/login",sigin);
+app.use("/v1/posts",posts);
+app.use("/v1/users",users)
 
 
 // documentation
