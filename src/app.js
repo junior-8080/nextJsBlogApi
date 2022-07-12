@@ -1,26 +1,39 @@
-const  express = require('express');
+import 'dotenv/config'
+import express from 'express';
 const app = express();
-const cors = require('cors')
-require('dotenv').config();
+import cors from 'cors';
 const PORT = process.env.PORT || 3004;
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
-const post = require('./router');
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import { dbInit } from './utils/dbconnection.js';
+import signup from './users/routes-siginup.js';
+import sigin  from './users/routes-login.js';
+import posts from './posts/routes.js';
+import users from './users/routes.js';
+import morgan from 'morgan';
+import logger from './logs/logger.js';
+import swaggerUI from 'swagger-ui-express';
+import swaggerDocument  from './swagger.json';
 
 
 
+// database initialization.
+dbInit();
 
+
+app.use(morgan('combined',{}));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+app.use("/signup",signup);
+app.use("/login",sigin);
+app.use("/posts",posts);
+app.use("/users",users)
 
-app.use("/v1/api",post);
-mongoose.connect(process.env.MONGO_DB_CONNECTING_STRING,{useNewUrlParser: true,useUnifiedTopology:true})
-.then((connect) => {
-     console.log('mongo is connected')
-})
-.catch(err => console.log(err))
 
-app.listen(PORT,()=> {console.log(`app running on port : ${PORT}`)});
+// documentation
+app.use("/api-docs",swaggerUI.serve,swaggerUI.setup(swaggerDocument));
+
+
+app.listen(PORT,()=> {logger.info(`app running on port : ${PORT}`)});

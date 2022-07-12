@@ -1,0 +1,323 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Blog Api.",
+    "description": "This is api-serivce that provides service of blog post",
+    "contact": {
+      "name": "Abdul Mukhsin",
+      "url": "http://aabdulmukhsin@gmail.com",
+      "email": "aabdulmukhisn@gmial.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "server": [
+    {
+      "url": "http://localhost:3004/",
+      "description": "Local Host",
+      "basePath": "/"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "accessAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-access-token"
+      } 
+    },
+    "schemas": {
+      "Login": {
+        "required": ["username", "password"],
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "abdul"
+          },
+          "password": {
+            "type": "string",
+            "example": "qwert123"
+          }
+        }
+      },
+      "getPOST": {
+        "properties": {
+          "statusCode": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "dateCreated": {
+                  "type": "string"
+                },
+                "_id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "string"
+                },
+                "userId": {
+                  "type": "string"
+                },
+                "author": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
+                    "twitter": {
+                      "type": "string"
+                    },
+                    "instagram": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "createPost": {
+        "required": ["title", "description", "body"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "JavaScript Variables II"
+          },
+          "description": {
+            "type": "string",
+            "example": "Variables are containers for storing data (storing data values).In this example, x, y, and z, are variables, declared with the var keyword"
+          },
+          "body": {
+            "type": "string",
+            "example": "The two variables price1 and price2 are declared with the const keywordd.These are constant values and cannot be changed.The variable total declared with the let keyword.This is a value that can be changed.The two variables price1 and price2 are declared with the const keywordd."
+          }
+        }
+      },
+      "createPostResponse": {
+        "properties": {
+          "statusCode": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "id": {
+        "type": "string",
+        "example": "62c2c19cdcf055004e427e2e"
+      }
+    }
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": ["Login"],
+        "parameters": [],
+        "requestBody": {
+          "description": "login to get token",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "user details with token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "statusCode": {
+                    "type": "interger"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "data": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "userId": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string",
+                        "formart": "email"
+                      },
+                      "twitter": {
+                        "type": "string"
+                      },
+                      "instagram": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "response for invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "statusCode": {
+                    "type": "interger",
+                    "exmaple": 401
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "Invalid Username or Password"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "UNAUTHORIZED"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts": {
+      "get": {
+        "tags": ["Posts"],
+        "description": "get all post",
+        "responses": {
+          "200": {
+            "description": "A list of post.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/getPOST"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Posts"],
+        "parameters": [],
+        "requestBody": {
+          "description": "login to get token",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "user details with token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createPostResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "response for invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "statusCode": {
+                    "type": "interger",
+                    "exmaple": 401
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "Invalid Username or Password"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "UNAUTHORIZED"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}/posts": {
+      "get": {
+        "security:":[{
+          "accessAuth":[]
+        }],
+        "tags": ["Posts"],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            },
+            "required": true
+          }
+        ],
+        "description": "get a users posts",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/getPOST"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

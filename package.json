@@ -2,17 +2,18 @@
   "name": "quiz_online",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js",
-    "start":"node src/app.js",
-    "main":"node src/pp.js"
+    "dev": "nodemon --experimental-json-modules  src/app.js",
+    "start": "node src/app.js",
+    "main": "node src/pp.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -22,7 +23,11 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.4",
     "mongoose": "^5.12.0",
+    "morgan": "^1.10.0",
     "path": "^0.12.7",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui-express": "^4.4.0",
+    "winston": "^3.8.1"
   }
 }
