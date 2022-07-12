@@ -30,7 +30,6 @@ export const retrievePostsByUserId = (req, res) => {
 
 export const retrievePost = (req, res) => {
   const data = {};
-  data.userId = req.user.userId;
   data.postId = req.params.postId;
   fetchPost(data)
     .then((response) => {
