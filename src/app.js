@@ -31,9 +31,7 @@ app.use("/v1/login",sigin);
 app.use("/v1/posts",posts);
 app.use("/v1/users",users)
 
-
 // documentation
 app.use("/api-docs",swaggerUI.serve,swaggerUI.setup(swaggerDocument));
-
-
 app.listen(PORT,()=> {logger.info(`app running on port : ${PORT}`)});
+
