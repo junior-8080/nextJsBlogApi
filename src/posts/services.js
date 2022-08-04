@@ -3,7 +3,6 @@ import Post from "../models/Post.js";
 import User from "../models/User.js";
 
 export const createPost = (data) => {
-  console.log(data);
   return new Promise((resolve, reject) => {
     User.findById(data.userId)
       .then((userDetails) => {
@@ -67,18 +66,16 @@ export const fetchPost = (data) => {
 
 export const updatePost = (data) => {
   return new Promise((resolve, reject) => {
-    Post.updateOne({ _id: data.postId }, { $set: { body: data.body } })
+    Post.updateOne({ _id: data.id }, { $set: { body: data.body } })
       .then((result) => {
-        if (result.n === 1) {
-          let payload = {
-            code: "RESOURCE_CREATED",
-            message: "Post Updated Successfully",
-            data: {
-              postId: data.postId,
-            },
-          };
-          return resolve(payload);
-        }
+        let payload = {
+          code: "RESOURCE_CREATED",
+          message: "Post Updated Successfully",
+          data: {
+            postId: data.postId,
+          },
+        };
+        return resolve(payload);
       })
       .catch((err) => reject(err));
   });

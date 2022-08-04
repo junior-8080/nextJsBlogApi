@@ -6,7 +6,7 @@ const router = express.Router();
 router.post('/',authorize,newPost);
 router.get('/',retrievePosts);
 router.get('/:postId',retrievePost);
-router.put('/',editPost);
+router.put('/',authorize,editPost);
 
 export default router;
 
