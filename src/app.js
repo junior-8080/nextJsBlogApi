@@ -7,7 +7,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { dbInit } from './utils/dbconnection.js';
 import signup from './users/routes-siginup.js';
-import sigin  from './users/routes-login.js';
+import signin  from './users/routes-login.js';
 import posts from './posts/routes.js';
 import users from './users/routes.js';
 import morgan from 'morgan';
@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use("/v1/signup",signup);
-app.use("/v1/login",sigin);
+app.use("/v1/login",signin);
 app.use("/v1/posts",posts);
 app.use("/v1/users",users)
 

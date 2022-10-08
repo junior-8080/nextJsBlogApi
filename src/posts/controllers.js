@@ -4,6 +4,7 @@ import * as api from "../utils/api.js";
 export const newPost = (req, res) => {
   const data = req.body;
   data.userId = req.user.userId;
+
   createPost(data)
     .then((response) => {
       return api.success(res, response);

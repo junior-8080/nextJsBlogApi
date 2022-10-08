@@ -15,7 +15,6 @@ export const newUser = (data)  => {
         return hashPassword(data.password);
       })
       .then((hashedPassword) => {
-        console.log(hashPassword)
         const user = new User({
           username: data.username,
           password: hashedPassword,
@@ -46,7 +45,7 @@ export const login = (data) => {
         if (!user) {
           let payload = {
             code: "UNAUTHORIZED",
-            message: "Invalid Username or Password ",
+            message: "Invalid Username or Password",
           };
           return reject(payload);
         }
