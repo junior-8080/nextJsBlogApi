@@ -39,6 +39,7 @@ export const retrievePost = (req, res) => {
     .catch((err) => api.serverErrors(err, response));
 };
 
+
 export const editPost = (req, res) => {
   const data = req.body;
   updatePost(data)

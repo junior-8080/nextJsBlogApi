@@ -1,7 +1,11 @@
 import User from "../models/User.js";
-import { hashPassword, comparePassword, generateToken } from "../utils/utils.js";
+import {
+  hashPassword,
+  comparePassword,
+  generateToken,
+} from "../utils/utils.js";
 
-export const newUser = (data)  => {
+export const newUser = (data) => {
   return new Promise((resolve, reject) => {
     User.find({ username: data.username, email: data.email })
       .then((result) => {
@@ -35,11 +39,11 @@ export const newUser = (data)  => {
       })
       .catch((err) => reject(err));
   });
-}
+};
 
 export const login = (data) => {
   return new Promise((resolve, reject) => {
-     User.find({ username: data.username })
+    User.find({ username: data.username })
       .then((result) => {
         let user = result[0];
         if (!user) {
@@ -62,9 +66,9 @@ export const login = (data) => {
         }
         let { user } = data;
         user = user[0];
-         let userPayload = {
-          userId : user._id,
-          name: user.username,
+        let userPayload = {
+          userId: user._id,
+          username: user.username,
           email: user.email,
           twitter: user.twitter,
           instagram: user.instagram,
@@ -78,8 +82,31 @@ export const login = (data) => {
           },
         };
         return resolve(payload);
-      }).catch(err => {console.log(err);reject(err)})
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
   });
 };
 
-
+export const updateUserDetails = (data) => {
+  return new Promise((resolve, reject) => {
+    User.findOneAndUpdate({ _id: data.userId }, { $set: { email: data.email,username: data.username,twitter: data.twitter, instagram: data.instagram } })
+      .then((result) => {
+        let payload = {
+          code: "RESOURCE_CREATED",
+          message: "User Updated Successfully",
+          data: {
+            username:result.username,
+            twitter: result.twitter,
+            instagram: result.instagram,
+            email: result.email,
+            userId: result._id
+          },
+        };
+        return resolve(payload);
+      })
+      .catch((err) => reject(err));
+  });
+};
