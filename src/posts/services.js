@@ -12,7 +12,7 @@ export const createPost = (data) => {
           body: data.body,
           userId: data.userId,
           author: {
-            name: userDetails.name,
+            name: userDetails.username,
             twitter: userDetails.twitter,
             instagram: userDetails.instagram,
           },
